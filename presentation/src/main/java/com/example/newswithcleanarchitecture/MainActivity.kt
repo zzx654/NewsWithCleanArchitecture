@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,7 +18,9 @@ import com.example.newswithcleanarchitecture.bottom_navigation.BottomNavItem
 import com.example.newswithcleanarchitecture.bottom_navigation.components.BottomNavigationBar
 import com.example.newswithcleanarchitecture.bottom_navigation.components.Navigation
 import com.example.newswithcleanarchitecture.ui.theme.NewsWithCleanArchitectureTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,17 +35,17 @@ class MainActivity : ComponentActivity() {
                                 BottomNavItem(
                                     name = "속보",
                                     route = "breakingnews",
-                                    icon = Icons.Default.Home
+                                    icon = Icons.Default.Warning
                                 ),
                                 BottomNavItem(
                                     name = "즐겨찾기",
                                     route = "favoritenews",
-                                    icon = Icons.Default.Notifications,
+                                    icon = Icons.Default.Favorite
                                 ),
                                 BottomNavItem(
                                     name = "검색",
                                     route = "searchnews",
-                                    icon = Icons.Default.Settings
+                                    icon = Icons.Default.Search
                                 ),
                             ),
                             navController = navController,
@@ -55,10 +55,9 @@ class MainActivity : ComponentActivity() {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
-                                    // Avoid multiple copies of the same destination when
-                                    // reselecting the same item
+                                    // 같은아이템 재선택시 같은 desination 생성 방지
                                     launchSingleTop = true
-                                    // Restore state when reselecting a previously selected item
+                                    //아이템 선택시 state 복구
                                     restoreState = true
                                 }
                             }
