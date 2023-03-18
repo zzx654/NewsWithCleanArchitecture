@@ -48,11 +48,12 @@ class SearchNewsViewModel @Inject constructor(
         newsPaginator.setSearchQuery(queryString)
         _state.value = state.value.copy(searchQuery = queryString, articles = emptyList(), endReached = false)
         searchJob?.cancel()
-        searchJob = viewModelScope.launch {
-            delay(SEARCH_NEWS_TIME_DELAY)
-            loadNextItems()
+        if(queryString != "") {
+            searchJob = viewModelScope.launch {
+                delay(SEARCH_NEWS_TIME_DELAY)
+                loadNextItems()
+            }
         }
-
     }
 
     override fun loadNextItems() {
