@@ -14,51 +14,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.newswithcleanarchitecture.components.ArticlePrevItem
+import com.example.newswithcleanarchitecture.components.NewsListingSection
 
 @Composable
 fun BreakingNewsScreen(
     viewModel: BreakingNewsViewModel = hiltViewModel()
 ) {
 
-    val state = viewModel.state.value
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(state.articles) { article ->
-                ArticlePrevItem(
-                    article = article
-                )
-                Divider()
-            }
-            item {
-                if(state.isLoading && state.articles.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        CircularProgressIndicator()
-
-                    }
-                }
-            }
-        }
-        state.error?.let {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colors.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-                    .align(Alignment.Center)
-            )
-        }
-        if(state.isLoading && state.articles.isEmpty()) {
-
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-
-        }
-    }
+    NewsListingSection(viewModel = viewModel)
 }

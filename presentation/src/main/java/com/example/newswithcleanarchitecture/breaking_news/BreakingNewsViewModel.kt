@@ -2,48 +2,49 @@ package com.example.newswithcleanarchitecture.breaking_news
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.use_case.GetBreakingNewsUseCase
-import com.example.domain.util.Resource
-import com.example.newswithcleanarchitecture.NewsFromApiState
+import com.example.newswithcleanarchitecture.util.NewsFromApiState
+import com.example.newswithcleanarchitecture.NewsFromApiViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BreakingNewsViewModel @Inject constructor(
-    private val getBreakingNewsUseCase: GetBreakingNewsUseCase
-) : ViewModel() {
+    private val getBreakingNewsUseCase: GetBreakingNewsUseCase,
+    ) : NewsFromApiViewModel() {
+
     private val _state = mutableStateOf(NewsFromApiState())
-    val state: State<NewsFromApiState>
+    override val state: State<NewsFromApiState>
         get() = _state
+    override val newsPaginator = BreakingNewsPaginator(
+        getBreakingNewsUseCase = getBreakingNewsUseCase,
+        initialKey = state.value.page,
+        onLoadUpdated = {
+            _state.value = state.value.copy(isLoading = it)
+        },
+        getNextKey = {
+            state.value.page + 1
+        },
+        onError = { message ->
+            _state.value = state.value.copy(error = message)
+        },
+        onSuccess = { items, currentPage, newKey, totalPages ->
+            _state.value = state.value.copy(
+                articles = state.value.articles + items,
+                page = newKey,
+                endReached = items.isEmpty() || currentPage == totalPages
+            )
+        }
+    )
 
     init {
-        getBreakingNews()
+        loadNextItems()
     }
-
-    private fun getBreakingNews() {
+    override fun loadNextItems() {
         viewModelScope.launch {
-            getBreakingNewsUseCase()
-                .collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            _state.value =
-                                NewsFromApiState(
-                                    articles = result.data?.articles ?: emptyList()
-                                )
-                        }
-                        is Resource.Error -> {
-                            _state.value = NewsFromApiState(
-                                error = result.message ?: "An unexpected error occured"
-                            )
-                        }
-                        is Resource.Loading -> {
-                            _state.value = NewsFromApiState(isLoading = true)
-                        }
-                    }
-                }
+            newsPaginator.loadNextItems()
         }
     }
 }

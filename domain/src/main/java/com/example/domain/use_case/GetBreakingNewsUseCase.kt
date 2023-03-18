@@ -10,5 +10,5 @@ class GetBreakingNewsUseCase @Inject constructor(
     private val repository: NewsRepository
 ) {
 
-    suspend operator fun invoke(): Flow<Resource<NewsResponse>> = repository.getBreakingNews()
+    suspend operator fun invoke(page: Int): Flow<Resource<NewsResponse>> = repository.getBreakingNews(page)
 }
