@@ -3,7 +3,7 @@ package com.example.newswithcleanarchitecture.breaking_news
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_case.GetBreakingNewsUseCase
+import com.example.domain.use_case.BreakingNewsUseCase
 import com.example.newswithcleanarchitecture.util.NewsFromApiState
 import com.example.newswithcleanarchitecture.NewsFromApiViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,14 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BreakingNewsViewModel @Inject constructor(
-    private val getBreakingNewsUseCase: GetBreakingNewsUseCase,
+    private val getBreakingNewsUseCase: BreakingNewsUseCase,
     ) : NewsFromApiViewModel() {
 
     private val _state = mutableStateOf(NewsFromApiState())
     override val state: State<NewsFromApiState>
         get() = _state
     override val newsPaginator = BreakingNewsPaginator(
-        getBreakingNewsUseCase = getBreakingNewsUseCase,
+        breakingNewsUseCase = getBreakingNewsUseCase,
         initialKey = state.value.page,
         onLoadUpdated = {
             _state.value = state.value.copy(isLoading = it)

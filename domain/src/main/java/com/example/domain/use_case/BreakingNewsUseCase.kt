@@ -6,7 +6,7 @@ import com.example.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetBreakingNewsUseCase @Inject constructor(
+class BreakingNewsUseCase @Inject constructor(
     private val repository: NewsRepository
 ) {
 
