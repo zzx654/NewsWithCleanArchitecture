@@ -13,6 +13,7 @@ import com.example.newswithcleanarchitecture.components.NewsListingSection
 
 @Composable
 fun SearchNewsScreen(
+    navController: NavController,
     viewModel: SearchNewsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
@@ -33,7 +34,7 @@ fun SearchNewsScreen(
             maxLines = 1,
             singleLine = true
         )
-        NewsListingSection(viewModel = viewModel)
+        NewsListingSection(navController = navController, viewModel = viewModel)
 
     }
 }
