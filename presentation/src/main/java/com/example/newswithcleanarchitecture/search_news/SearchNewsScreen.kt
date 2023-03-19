@@ -8,10 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.newswithcleanarchitecture.components.NewsListingSection
 
 @Composable
 fun SearchNewsScreen(
+    navController: NavController,
     viewModel: SearchNewsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
@@ -32,7 +34,7 @@ fun SearchNewsScreen(
             maxLines = 1,
             singleLine = true
         )
-        NewsListingSection(viewModel = viewModel)
+        NewsListingSection(navController = navController, viewModel = viewModel)
 
     }
 }

@@ -13,13 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.newswithcleanarchitecture.components.ArticlePrevItem
 import com.example.newswithcleanarchitecture.components.NewsListingSection
 
 @Composable
 fun BreakingNewsScreen(
+    navController: NavController,
     viewModel: BreakingNewsViewModel = hiltViewModel()
 ) {
 
-    NewsListingSection(viewModel = viewModel)
+    NewsListingSection(navController = navController, viewModel = viewModel)
 }
