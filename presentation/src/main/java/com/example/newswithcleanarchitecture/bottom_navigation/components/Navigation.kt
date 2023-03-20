@@ -20,7 +20,7 @@ fun Navigation(navController: NavHostController) {
             BreakingNewsScreen(navController)
         }
         composable("favoritenews") {
-            FavoriteNewsScreen()
+            FavoriteNewsScreen(navController)
         }
         composable("searchnews") {
             SearchNewsScreen(navController)
@@ -76,7 +76,7 @@ fun Navigation(navController: NavHostController) {
         ) {
             ArticleScreen(
                 Article(
-                    id = it.arguments?.getInt("articleId") ?: -1,
+                    id = it.arguments?.getInt("articleId"),
                     publishedAt = it.arguments?.getString("publishedAt") ?: "",
                     source = Source(
                         id = it.arguments?.getInt("sourceId") ?: -1,

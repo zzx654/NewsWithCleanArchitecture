@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.newswithcleanarchitecture.components.NewsListingSection
+import com.example.newswithcleanarchitecture.components.NewsListingFromApiSection
 
 @Composable
 fun SearchNewsScreen(
@@ -34,7 +34,7 @@ fun SearchNewsScreen(
             maxLines = 1,
             singleLine = true
         )
-        NewsListingSection(navController = navController, viewModel = viewModel)
+        NewsListingFromApiSection(navController = navController, viewModel = viewModel)
 
     }
 }
