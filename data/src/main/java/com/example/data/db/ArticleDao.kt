@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 interface ArticleDao {
 
     @Insert(onConflict= OnConflictStrategy.REPLACE)
-    suspend fun upsert(article: Article):Long
+    suspend fun upsert(article: Article)
 
     @Query("SELECT *FROM articles")
     fun getAllArticles(): Flow<List<Article>>
 
-    @Delete
-    suspend fun deleteArticle(article: Article)
+    @Query("DELETE FROM articles WHERE url = :url")
+    suspend fun deleteArticle(url: String)
 
     @Query("SELECT COUNT(*) FROM articles WHERE url = :url")
     fun findArticle(url: String): Flow<Int>

@@ -14,7 +14,6 @@ import com.example.domain.model.Article
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase: RoomDatabase() {
 
-    //abstract fun getArticleDao():ArticleDao
     abstract val articleDao: ArticleDao
 
     companion object{

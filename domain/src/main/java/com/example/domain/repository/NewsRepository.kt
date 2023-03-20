@@ -15,7 +15,7 @@ interface NewsRepository {
 
     suspend fun insertArticle(article: Article)
 
-    suspend fun deleteArticle(article: Article)
+    suspend fun deleteArticle(url: String)
 
     fun findArticle(url: String): Flow<Int>
 

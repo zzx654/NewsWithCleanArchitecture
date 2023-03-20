@@ -76,7 +76,7 @@ fun Navigation(navController: NavHostController) {
         ) {
             ArticleScreen(
                 Article(
-                    id = it.arguments?.getInt("articleId") ?: -1,
+                    id = it.arguments?.getInt("articleId"),
                     publishedAt = it.arguments?.getString("publishedAt") ?: "",
                     source = Source(
                         id = it.arguments?.getInt("sourceId") ?: -1,

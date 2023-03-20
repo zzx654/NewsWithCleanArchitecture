@@ -28,7 +28,7 @@ fun ArticleScreen(
     viewModel: ArticleViewModel = hiltViewModel()
 ) {
 
-    val state = viewModel.state.value
+
     val context = LocalContext.current
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -47,6 +47,7 @@ fun ArticleScreen(
                 },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
+                val state = viewModel.state.value
                 if(state) {
                     Icon(imageVector = Icons.Default.Favorite, contentDescription = "saved")
                 } else {

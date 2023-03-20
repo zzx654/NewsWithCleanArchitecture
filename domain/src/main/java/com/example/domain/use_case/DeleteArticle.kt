@@ -7,7 +7,7 @@ class DeleteArticle(
     private val repository: NewsRepository
 ) {
 
-    suspend operator fun invoke(article: Article) {
-        repository.deleteArticle(article)
+    suspend operator fun invoke(url: String) {
+        repository.deleteArticle(url)
     }
 }

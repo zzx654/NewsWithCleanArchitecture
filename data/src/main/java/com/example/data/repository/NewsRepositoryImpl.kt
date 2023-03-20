@@ -74,8 +74,8 @@ class NewsRepositoryImpl @Inject constructor(
         dao.upsert(article)
     }
 
-    override suspend fun deleteArticle(article: Article) {
-        dao.deleteArticle(article)
+    override suspend fun deleteArticle(url: String) {
+        dao.deleteArticle(url)
     }
 
     override fun findArticle(url: String): Flow<Int> {

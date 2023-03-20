@@ -40,14 +40,15 @@ class ArticleViewModel @Inject constructor(
         articleUrl?.let { isArticleExist(it) }
     }
     fun toggleSave(article: Article) {
+        val newArticle = article.copy(id = null)
         articleUrl?.let { url ->
             viewModelScope.launch {
                 if(state.value) {
-                    databaseUseCases.deleteArticle(article)
+                    databaseUseCases.deleteArticle(article.url)
                     _eventFlow.emit(UiEvent.ShowToast("삭제되었습니다"))
                 }
                 else {
-                    databaseUseCases.addArticle(article)
+                    databaseUseCases.addArticle(newArticle)
                     _eventFlow.emit(UiEvent.ShowToast("저장되었습니다"))
                 }
 
