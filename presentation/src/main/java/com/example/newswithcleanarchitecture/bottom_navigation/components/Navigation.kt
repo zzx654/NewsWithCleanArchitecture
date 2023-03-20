@@ -20,7 +20,7 @@ fun Navigation(navController: NavHostController) {
             BreakingNewsScreen(navController)
         }
         composable("favoritenews") {
-            FavoriteNewsScreen()
+            FavoriteNewsScreen(navController)
         }
         composable("searchnews") {
             SearchNewsScreen(navController)

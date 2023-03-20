@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import com.example.data.db.ArticleDao
 import com.example.data.remote.NewsApi
 import com.example.data.remote.dto.toArticle
 import com.example.data.remote.dto.toNewsResponse
@@ -14,7 +15,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
-    private val api: NewsApi
+    private val api: NewsApi,
+    private val dao: ArticleDao
 ) : NewsRepository {
 
     override suspend fun getBreakingNews(page: Int?): Flow<Resource<NewsResponse>> {
@@ -62,6 +64,22 @@ class NewsRepositoryImpl @Inject constructor(
                 emit(Resource.Error<NewsResponse>("Couldn't reach server. Check your internet connection"))
             }
         }
+    }
+
+    override fun getArticles(): Flow<List<Article>> {
+        return dao.getAllArticles()
+    }
+
+    override suspend fun insertArticle(article: Article) {
+        dao.upsert(article)
+    }
+
+    override suspend fun deleteArticle(article: Article) {
+        dao.deleteArticle(article)
+    }
+
+    override fun findArticle(url: String): Flow<Int> {
+        return dao.findArticle(url)
     }
 
 }

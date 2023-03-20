@@ -1,8 +1,7 @@
 package com.example.domain.di
 
 import com.example.domain.repository.NewsRepository
-import com.example.domain.use_case.BreakingNewsUseCase
-import com.example.domain.use_case.SearchNewsUseCase
+import com.example.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +22,15 @@ object UseCaseModule {
     @Singleton
     fun provideSearchgNewsUseCase(repository: NewsRepository): SearchNewsUseCase {
         return SearchNewsUseCase(repository)
+    }
+    @Provides
+    @Singleton
+    fun provideDatabaseUseCases(repository: NewsRepository): DatabaseUseCases {
+        return DatabaseUseCases(
+            getArticles = GetArticles(repository),
+            deleteArticle = DeleteArticle(repository),
+            addArticle = AddArticle(repository),
+            findArticle = FindArticle(repository)
+        )
     }
 }

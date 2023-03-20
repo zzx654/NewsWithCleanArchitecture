@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.newswithcleanarchitecture.components.ArticlePrevItem
-import com.example.newswithcleanarchitecture.components.NewsListingSection
+import com.example.newswithcleanarchitecture.components.NewsListingFromApiSection
 
 @Composable
 fun BreakingNewsScreen(
@@ -23,5 +23,5 @@ fun BreakingNewsScreen(
     viewModel: BreakingNewsViewModel = hiltViewModel()
 ) {
 
-    NewsListingSection(navController = navController, viewModel = viewModel)
+    NewsListingFromApiSection(navController = navController, viewModel = viewModel)
 }
