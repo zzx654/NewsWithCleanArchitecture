@@ -14,10 +14,13 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.domain.model.Article
+import com.example.newswithcleanarchitecture.ui.theme.BottomUnSelected
+import com.example.newswithcleanarchitecture.ui.theme.FabColor
 import com.example.newswithcleanarchitecture.util.UiEvent
 import kotlinx.coroutines.flow.collectLatest
 
@@ -45,13 +48,13 @@ fun ArticleScreen(
                 onClick = {
                     viewModel.toggleSave(article)
                 },
-                backgroundColor = MaterialTheme.colors.primary
+                backgroundColor = FabColor
             ) {
                 val state = viewModel.state.value
                 if(state) {
-                    Icon(imageVector = Icons.Default.Favorite, contentDescription = "saved")
+                    Icon(imageVector = Icons.Default.Favorite, contentDescription = "saved", tint = Color.White)
                 } else {
-                    Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "unsaved")
+                    Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "unsaved", tint = Color.White)
                 }
             }
         }

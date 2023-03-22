@@ -1,5 +1,6 @@
 package com.example.newswithcleanarchitecture.favorite_news
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import com.example.newswithcleanarchitecture.components.ArticlePrevItem
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FavoriteNewsScreen(
@@ -38,71 +40,96 @@ fun FavoriteNewsScreen(
 
     val context = LocalContext.current
 
-    LazyColumn(
-        state = rememberLazyListState(),
-        modifier = Modifier.fillMaxSize()
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        scaffoldState = scaffoldState
+
     ) {
-        items(articlesState) { article ->
-            val swipeableState = rememberSwipeableState(initialValue = 0)
-            val scope = rememberCoroutineScope()
+        LazyColumn(
+            state = rememberLazyListState(),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(articlesState) { article ->
+                val swipeableState = rememberSwipeableState(initialValue = 0)
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .swipeable(
-                        state = swipeableState,
-                        anchors = mapOf(
-                            0f to 0,
-                            -dipToPx(context, 100f) to 1,
-                            dipToPx(context, 100f) to 2
-                        ),
-                        thresholds = { _, _ ->
-                            FractionalThreshold(0.3f)
-                        },
-                        orientation = androidx.compose.foundation.gestures.Orientation.Horizontal
-                    )
-            ) {
-                // show delete when left swipe
-                IconButton(
-                    onClick = {
-                    },
+
+                Box(
                     modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 30.dp)
-                        .size(40.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Delete,
-                        contentDescription = null,
-                        tint = Color.Red,
-                        modifier = Modifier
-                            .size(40.dp)
-                    )
-
-                }
-
-                ArticlePrevItem(
-                    modifier = Modifier
-                        .offset {
-                            IntOffset(swipeableState.offset.value.roundToInt(), 0)
-                        }
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .clickable {
-                            navController.navigate(
-                                "article" +
-                                        "?articleId=${article.id}&publishedAt=${article.publishedAt}" +
-                                        "&sourceId=${article.source.id}&sourceName=${article.source.name}" +
-                                        "&title=${article.title}&url=${article.url}&urlToImage=${article.urlToImage}"
-                            )
+                        .swipeable(
+                            state = swipeableState,
+                            anchors = mapOf(
+                                0f to 0,
+                                -dipToPx(context, 100f) to 1
+                            ),
+                            thresholds = { _, _ ->
+                                FractionalThreshold(0.3f)
+                            },
+                            orientation = androidx.compose.foundation.gestures.Orientation.Horizontal
+                        )
+                ) {
+                    // show delete when left swipe
+                    IconButton(
+                        onClick = {
+
+                            scope.launch {
+                                swipeableState.animateTo(0,tween(10,0))
+                                viewModel.onEvent(NewsEvent.DeleteArticle(article))
+                                val result = scaffoldState.snackbarHostState.showSnackbar(
+                                    message = "기사가 삭제되었습니다",
+                                    actionLabel = "취소"
+                                )
+                                if(result == SnackbarResult.ActionPerformed) {
+                                    viewModel.onEvent(NewsEvent.RestoreArticle)
+                                }
+                            }
+
                         },
-                    article = article,
-                )
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 30.dp)
+                            .size(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = null,
+                            tint = Color.Red,
+                            modifier = Modifier
+                                .size(40.dp)
+                        )
+
+                    }
+
+                    ArticlePrevItem(
+                        modifier = Modifier
+                            .offset {
+                                IntOffset(swipeableState.offset.value.roundToInt(), 0)
+                            }
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .clickable {
+                                navController.navigate(
+                                    "article" +
+                                            "?articleId=${article.id}&publishedAt=${article.publishedAt}" +
+                                            "&sourceId=${article.source.id}&sourceName=${article.source.name}" +
+                                            "&title=${article.title}&url=${article.url}&urlToImage=${article.urlToImage}"
+                                )
+                            },
+                        article = article,
+                    )
+                }
+                Divider()
             }
-            Divider()
         }
+
+
     }
+
+
+
 
 
 }

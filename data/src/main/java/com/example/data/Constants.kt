@@ -1,7 +1,7 @@
 package com.example.data
 
 object Constants {
-    const val API_KEY = "ab5d7e0ba2f647e5bd9b4f954d3b793f"
+    const val API_KEY = "54b745a47457487695b6c2def5a69be6"
     const val BASE_URL = "https://newsapi.org"
     const val SEARCH_NEWS_TIME_DELAY = 500L
     const val BREAKINGNEWS_PAGE_SIZE = 20
