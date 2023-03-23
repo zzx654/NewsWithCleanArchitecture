@@ -29,6 +29,7 @@ class SearchNewsPaginator(
         }
         isMakingRequest = true
 
+
         getSearchedNewsUseCase(searchQuery = searchQuery, page = currentKey)
             .collect { result ->
 

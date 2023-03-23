@@ -46,7 +46,7 @@ class SearchNewsViewModel @Inject constructor(
     @SuppressLint("SuspiciousIndentation")
     fun searchQueryChange(queryString: String) {
         newsPaginator.setSearchQuery(queryString)
-        _state.value = state.value.copy(searchQuery = queryString, articles = emptyList(), endReached = false)
+        _state.value = state.value.copy(page = 1,searchQuery = queryString, articles = emptyList(), endReached = false)
         searchJob?.cancel()
         if(queryString != "") {
             searchJob = viewModelScope.launch {

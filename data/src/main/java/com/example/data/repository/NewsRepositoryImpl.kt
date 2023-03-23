@@ -19,12 +19,12 @@ class NewsRepositoryImpl @Inject constructor(
     private val dao: ArticleDao
 ) : NewsRepository {
 
-    override suspend fun getBreakingNews(page: Int?): Flow<Resource<NewsResponse>> {
+    override suspend fun getBreakingNews(page: Int): Flow<Resource<NewsResponse>> {
 
         return flow {
             try {
                 emit(Resource.Loading<NewsResponse>())
-                api.getBreakingNews().body()?.let{ response ->
+                api.getBreakingNews(pageNumber = page).body()?.let{ response ->
                     response.articles.let { articles ->
                         val newsResponse =
                             response.toNewsResponse(articles.map { it.toArticle() }.toMutableList())

@@ -12,7 +12,7 @@ interface NewsApi {
         @Query("country")
         countrycode:String="us",
         @Query("page")
-        pageNumber:Int=1,
+        pageNumber:Int,
         @Query("apiKey")
         apiKey:String=API_KEY
     ): Response<NewsResponseDto>
@@ -22,7 +22,7 @@ interface NewsApi {
         @Query("q")
         searchQuery:String="kr",
         @Query("page")
-        pageNumber:Int=1,
+        pageNumber:Int,
         @Query("apiKey")
         apiKey:String=API_KEY
     ):Response<NewsResponseDto>
