@@ -19,7 +19,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val dao: ArticleDao
 ) : NewsRepository {
 
-    override suspend fun getBreakingNews(page: Int): Flow<Resource<NewsResponse>> {
+     override suspend fun getBreakingNews(page: Int): Flow<Resource<NewsResponse>> {
 
         return flow {
             try {
