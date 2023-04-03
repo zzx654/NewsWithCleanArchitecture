@@ -1,5 +1,6 @@
 package com.example.domain.use_case
 
+import com.example.domain.Service.Companion.BREAKINGNEWS_PAGE_SIZE
 import com.example.domain.repository.FakeNewsRepository
 import com.example.domain.util.Resource
 import kotlinx.coroutines.flow.first
@@ -11,7 +12,6 @@ import org.junit.Test
 
 class BreakingNewsUseCaseTest {
 
-    lateinit var mockWebServer: MockWebServer
 
     private lateinit var breakingNewsUseCase: BreakingNewsUseCase
 
@@ -28,7 +28,14 @@ class BreakingNewsUseCaseTest {
 
         val apiResponse = breakingNewsUseCase(page = 1).first()
 
+
         assertThat(apiResponse).isInstanceOf(Resource.Success::class.java)
+
+        assertThat(apiResponse.data).isNotNull()
+
+        assertThat(apiResponse.data?.articles).isNotNull()
+
+        assertThat(apiResponse.data?.articles?.size).isEqualTo(BREAKINGNEWS_PAGE_SIZE)
 
 
     }

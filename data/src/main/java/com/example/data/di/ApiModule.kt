@@ -1,6 +1,9 @@
 package com.example.data.di
 
+import android.app.Application
+import androidx.room.Room
 import com.example.data.Constants
+import com.example.data.db.ArticleDatabase
 import com.example.data.remote.NewsApi
 import dagger.Module
 import dagger.Provides
@@ -33,4 +36,6 @@ object ApiModule {
             .build()
             .create(NewsApi::class.java)
     }
+
+
 }

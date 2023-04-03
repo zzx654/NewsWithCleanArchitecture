@@ -26,6 +26,8 @@ interface Service {
         const val API_KEY = "54b745a47457487695b6c2def5a69be6"
         const val BASE_URL = "https://newsapi.org"
 
+        const val BREAKINGNEWS_PAGE_SIZE = 20
+
          private val service = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())

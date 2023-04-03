@@ -6,4 +6,5 @@ object Constants {
     const val SEARCH_NEWS_TIME_DELAY = 500L
     const val BREAKINGNEWS_PAGE_SIZE = 20
     const val SEARCHINGNEWS_PAGE_SIZE = 100
+    const val SEARCHNEWS_FIELD = "SEARCHNEWS_FIELD"
 }
